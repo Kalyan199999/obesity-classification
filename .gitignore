@@ -1,4 +1,5 @@
 venv
 .env
 /saved_models
+/Obesity_Classification.egg-info
 /.ipynb_checkpoints

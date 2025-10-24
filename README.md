@@ -6,8 +6,10 @@ conda create -p venv python=3.10
 ###  To activate this environment use                    
 ###  conda activate C:\Users\hp\OneDrive\Desktop\obesity_classification\venv     
 
-### To download the required packages use requirements.txt file
+### To download/install the required packages use requirements.txt file
 ### pip install -r requirements.txt
+
+### -e . --> It is a reference to setup.py file
 
 
 ### project-name/
