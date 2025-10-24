@@ -1,1 +1,4 @@
+venv
+.env
+/saved_models
 /.ipynb_checkpoints
