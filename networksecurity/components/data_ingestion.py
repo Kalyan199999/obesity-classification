@@ -2,6 +2,7 @@ import os
 import sys
 from networksecurity.exception.exception import NetworkSecurityException
 from networksecurity.logging import logger
+from networksecurity.utils.converting_target import    convert_target
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
@@ -24,12 +25,23 @@ class DataIngestion:
 
     def intiate_data_ingestion(self):
         try:
-            logger.logging.info(f"Loading the dataset from path: {self.ingestion_config.raw_data_path}")
+            logger.logging.info(f"Loading the raw dataset from path: {self.ingestion_config.raw_data_path}")
 
             df = pd.read_csv(self.ingestion_config.raw_data_path)
             print(df.head())
             
             logger.logging.info(f"Dataset preview: \n{df.head()}")
+
+            logger.logging.info(f"changing the columns into lower case!")
+            df.columns = df.columns.str.lower()
+
+            logger.logging.info(f"converting the target column into binary format!")
+            df['target'] = df['nobeyesdad'].apply(convert_target)
+
+            logger.logging.info(f"Deleting the column nobeyesdad!")
+            df.drop('nobeyesdad', axis=1, inplace=True)
+
+            logger.logging.info(f"Dataset preview after operations: \n{df.head()}")
 
             # make train and test paths
             os.makedirs( os.path.dirname( self.ingestion_config.train_data_path ), exist_ok=True )
@@ -56,6 +68,6 @@ class DataIngestion:
             raise NetworkSecurityException(e)
         
 
-if __name__ == "__main__":
-    obj = DataIngestion()
-    obj.intiate_data_ingestion()
+# if __name__ == "__main__":
+#     obj = DataIngestion()
+#     obj.intiate_data_ingestion()

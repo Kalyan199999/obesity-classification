@@ -1,6 +1,6 @@
-[ 2025-10-24 19:51:46,684 ] 160 numexpr.utils - INFO - NumExpr defaulting to 8 threads.
-[ 2025-10-24 19:51:48,228 ] 27 root - INFO - Loading the dataset from path: ../obesity_classification/data\ObesityDataSet.csv
-[ 2025-10-24 19:51:48,273 ] 32 root - INFO - Dataset preview: 
+[ 2025-10-25 11:42:59,500 ] 160 numexpr.utils - INFO - NumExpr defaulting to 8 threads.
+[ 2025-10-25 11:43:01,591 ] 28 root - INFO - Loading the raw dataset from path: ../obesity_classification/data\ObesityDataSet.csv
+[ 2025-10-25 11:43:01,661 ] 33 root - INFO - Dataset preview: 
    Gender   Age  Height  Weight family_history_with_overweight FAVC  ...  SCC  FAF  TUE        CALC                 MTRANS           NObeyesdad
 0  Female  21.0    1.62    64.0                            yes   no  ...   no  0.0  1.0          no  Public_Transportation        Normal_Weight
 1  Female  21.0    1.52    56.0                            yes   no  ...  yes  3.0  0.0   Sometimes  Public_Transportation        Normal_Weight
@@ -9,5 +9,8 @@
 4    Male  22.0    1.78    89.8                             no   no  ...   no  0.0  0.0   Sometimes  Public_Transportation  Overweight_Level_II
 
 [5 rows x 17 columns]
-[ 2025-10-24 19:51:48,282 ] 41 root - INFO - Train and test data is split into train and test data initiated!
-[ 2025-10-24 19:51:48,309 ] 47 root - INFO - Train and test data is split is done!
+[ 2025-10-25 11:43:01,662 ] 35 root - INFO - changing the columns into lower case!
+[ 2025-10-25 11:43:01,662 ] 38 root - INFO - converting the target column into binary format!
+[ 2025-10-25 11:43:01,664 ] 41 root - INFO - Deleting the column nobeyesdad!
+[ 2025-10-25 11:43:01,667 ] 51 root - INFO - Train and test data is split into train and test data initiated!
+[ 2025-10-25 11:43:01,697 ] 57 root - INFO - Train and test data is split is done!
