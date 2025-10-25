@@ -2,7 +2,7 @@ import os
 import sys
 from networksecurity.exception.exception import NetworkSecurityException
 from networksecurity.logging import logger
-from networksecurity.utils.converting_target import    convert_target
+from networksecurity.utils.converting import    convert_target
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
@@ -67,7 +67,3 @@ class DataIngestion:
         except Exception as e:
             raise NetworkSecurityException(e)
         
-
-# if __name__ == "__main__":
-#     obj = DataIngestion()
-#     obj.intiate_data_ingestion()

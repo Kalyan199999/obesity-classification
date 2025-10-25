@@ -1,0 +1,29 @@
+[ 2025-10-25 12:35:42,633 ] 28 root - INFO - Loading the raw dataset from path: ../obesity_classification/data\ObesityDataSet.csv
+[ 2025-10-25 12:35:42,687 ] 33 root - INFO - Dataset preview: 
+   Gender   Age  Height  Weight family_history_with_overweight FAVC  FCVC  ...  CH2O  SCC  FAF  TUE        CALC                 MTRANS           NObeyesdad
+0  Female  21.0    1.62    64.0                            yes   no   2.0  ...   2.0   no  0.0  1.0          no  Public_Transportation        Normal_Weight
+1  Female  21.0    1.52    56.0                            yes   no   3.0  ...   3.0  yes  3.0  0.0   Sometimes  Public_Transportation        Normal_Weight
+2    Male  23.0    1.80    77.0                            yes   no   2.0  ...   2.0   no  2.0  1.0  Frequently  Public_Transportation        Normal_Weight
+3    Male  27.0    1.80    87.0                             no   no   3.0  ...   2.0   no  2.0  0.0  Frequently                Walking   Overweight_Level_I
+4    Male  22.0    1.78    89.8                             no   no   2.0  ...   2.0   no  0.0  0.0   Sometimes  Public_Transportation  Overweight_Level_II
+
+[5 rows x 17 columns]
+[ 2025-10-25 12:35:42,688 ] 35 root - INFO - changing the columns into lower case!
+[ 2025-10-25 12:35:42,688 ] 38 root - INFO - converting the target column into binary format!
+[ 2025-10-25 12:35:42,690 ] 41 root - INFO - Deleting the column nobeyesdad!
+[ 2025-10-25 12:35:42,710 ] 44 root - INFO - Dataset preview after operations: 
+   gender   age  height  weight family_history_with_overweight favc  fcvc  ncp       caec smoke  ch2o  scc  faf  tue        calc                 mtrans target
+0  Female  21.0    1.62    64.0                            yes   no   2.0  3.0  Sometimes    no   2.0   no  0.0  1.0          no  Public_Transportation     no
+1  Female  21.0    1.52    56.0                            yes   no   3.0  3.0  Sometimes   yes   3.0  yes  3.0  0.0   Sometimes  Public_Transportation     no
+2    Male  23.0    1.80    77.0                            yes   no   2.0  3.0  Sometimes    no   2.0   no  2.0  1.0  Frequently  Public_Transportation     no
+3    Male  27.0    1.80    87.0                             no   no   3.0  3.0  Sometimes    no   2.0   no  2.0  0.0  Frequently                Walking     no
+4    Male  22.0    1.78    89.8                             no   no   2.0  1.0  Sometimes    no   2.0   no  0.0  0.0   Sometimes  Public_Transportation     no
+[ 2025-10-25 12:35:42,712 ] 53 root - INFO - Train and test data is split into train and test data initiated!
+[ 2025-10-25 12:35:42,734 ] 59 root - INFO - Train and test data is split is done!
+[ 2025-10-25 12:35:42,734 ] 62 root - INFO - Reading the training and testing data!
+[ 2025-10-25 12:35:42,765 ] 68 root - INFO - Reading train and test data completed
+[ 2025-10-25 12:35:42,765 ] 70 root - INFO - Converting categorical columns to lowercase!
+[ 2025-10-25 12:35:42,773 ] 76 root - INFO - Obtaining preprocessing object
+[ 2025-10-25 12:35:42,773 ] 82 root - INFO - Seperating the independent and dependent features for training and testing!
+[ 2025-10-25 12:35:42,774 ] 92 root - INFO - Applying preprocessing object on training dataframe and testing dataframe
+[ 2025-10-25 12:35:42,813 ] 106 root - INFO - Preprocessing object saved
