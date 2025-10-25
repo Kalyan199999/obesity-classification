@@ -103,9 +103,10 @@ class DataTransformation:
                 input_feature_test_transformed, np.array(target_feature_test_df)
             ]
 
-            logger.logging.info("Preprocessing object saved")
 
             save_object( file_path =self.data_transformation_config.preprocessor_obj_file_path , obj = preprocessing_obj )
+
+            logger.logging.info("Preprocessing object saved")
             
             return (
                 train_arr,
@@ -117,12 +118,12 @@ class DataTransformation:
             raise NetworkSecurityException(e)
         
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
 
-    di = DataIngestion()
+#     di = DataIngestion()
 
-    train_path , test_path , _ = di.intiate_data_ingestion()
+#     train_path , test_path , _ = di.intiate_data_ingestion()
 
-    dt = DataTransformation()
+#     dt = DataTransformation()
     
-    dt.initiate_data_transformation(train_path=train_path, test_path=test_path)
+#     dt.initiate_data_transformation(train_path=train_path, test_path=test_path)

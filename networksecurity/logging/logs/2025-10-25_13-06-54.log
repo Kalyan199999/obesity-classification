@@ -1,0 +1,53 @@
+[ 2025-10-25 13:06:55,326 ] 160 numexpr.utils - INFO - NumExpr defaulting to 8 threads.
+[ 2025-10-25 13:06:57,055 ] 28 root - INFO - Loading the raw dataset from path: ../obesity_classification/data\ObesityDataSet.csv
+[ 2025-10-25 13:06:57,115 ] 33 root - INFO - Dataset preview: 
+   Gender   Age  Height  Weight  ...  TUE        CALC                 MTRANS           NObeyesdad
+0  Female  21.0    1.62    64.0  ...  1.0          no  Public_Transportation        Normal_Weight
+1  Female  21.0    1.52    56.0  ...  0.0   Sometimes  Public_Transportation        Normal_Weight
+2    Male  23.0    1.80    77.0  ...  1.0  Frequently  Public_Transportation        Normal_Weight
+3    Male  27.0    1.80    87.0  ...  0.0  Frequently                Walking   Overweight_Level_I
+4    Male  22.0    1.78    89.8  ...  0.0   Sometimes  Public_Transportation  Overweight_Level_II
+
+[5 rows x 17 columns]
+[ 2025-10-25 13:06:57,115 ] 35 root - INFO - changing the columns into lower case!
+[ 2025-10-25 13:06:57,116 ] 38 root - INFO - converting the target column into binary format!
+[ 2025-10-25 13:06:57,117 ] 41 root - INFO - Deleting the column nobeyesdad!
+[ 2025-10-25 13:06:57,133 ] 44 root - INFO - Dataset preview after operations: 
+   gender   age  height  weight family_history_with_overweight  ...  faf  tue        calc                 mtrans target
+0  Female  21.0    1.62    64.0                            yes  ...  0.0  1.0          no  Public_Transportation     no
+1  Female  21.0    1.52    56.0                            yes  ...  3.0  0.0   Sometimes  Public_Transportation     no
+2    Male  23.0    1.80    77.0                            yes  ...  2.0  1.0  Frequently  Public_Transportation     no
+3    Male  27.0    1.80    87.0                             no  ...  2.0  0.0  Frequently                Walking     no
+4    Male  22.0    1.78    89.8                             no  ...  0.0  0.0   Sometimes  Public_Transportation     no
+
+[5 rows x 17 columns]
+[ 2025-10-25 13:06:57,135 ] 53 root - INFO - Train and test data is split into train and test data initiated!
+[ 2025-10-25 13:06:57,160 ] 59 root - INFO - Train and test data is split is done!
+[ 2025-10-25 13:06:57,161 ] 62 root - INFO - Reading the training and testing data!
+[ 2025-10-25 13:06:57,210 ] 68 root - INFO - Reading train and test data completed
+[ 2025-10-25 13:06:57,210 ] 70 root - INFO - Converting categorical columns to lowercase!
+[ 2025-10-25 13:06:57,222 ] 76 root - INFO - Obtaining preprocessing object
+[ 2025-10-25 13:06:57,222 ] 82 root - INFO - Seperating the independent and dependent features for training and testing!
+[ 2025-10-25 13:06:57,226 ] 92 root - INFO - Applying preprocessing object on training dataframe and testing dataframe
+[ 2025-10-25 13:06:57,280 ] 108 root - INFO - Preprocessing object saved
+[ 2025-10-25 13:06:57,281 ] 25 root - INFO - Data splitting Started!
+[ 2025-10-25 13:06:57,282 ] 31 root - INFO - Data Splitting Done!
+[ 2025-10-25 13:06:57,282 ] 33 root - INFO - Model Training Started!
+[ 2025-10-25 13:06:57,423 ] 38 root - INFO - Model Training Done!
+[ 2025-10-25 13:06:57,423 ] 40 root - INFO - Model Evaluation Started!
+[ 2025-10-25 13:06:57,485 ] 48 root - INFO - Accuracy of the model is : 0.9952718676122931
+[ 2025-10-25 13:06:57,485 ] 50 root - INFO - classification Report of the model is :
+               precision    recall  f1-score   support
+
+          no       1.00      1.00      1.00       224
+         yes       0.99      0.99      0.99       199
+
+    accuracy                           1.00       423
+   macro avg       1.00      1.00      1.00       423
+weighted avg       1.00      1.00      1.00       423
+
+[ 2025-10-25 13:06:57,486 ] 52 root - INFO - confusion matrix of the model is : [[223   1]
+ [  1 198]]
+[ 2025-10-25 13:06:57,486 ] 54 root - INFO - Model Evaluation Done!
+[ 2025-10-25 13:06:57,486 ] 56 root - INFO - Model Saving Started!
+[ 2025-10-25 13:06:57,490 ] 60 root - INFO - Model Saving Done!
