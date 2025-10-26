@@ -47,3 +47,6 @@ def save_object( file_path:str , obj:str  ):
 
     except Exception as e:
         raise NetworkSecurityException(e)
+    
+def load_object():
+    pass
