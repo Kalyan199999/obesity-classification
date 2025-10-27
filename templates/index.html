@@ -1,11 +1,318 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Obesity check</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Obesity Classification</title>
+  <style>
+    :root{
+      --bg:#f7fafc; --card:#ffffff; --accent:#2563eb; --muted:#6b7280;
+      --success:#16a34a;
+    }
+    body{
+      font-family: Inter, Roboto, system-ui, -apple-system, "Segoe UI", Arial;
+      background: linear-gradient(180deg,#eef2ff 0%,var(--bg) 100%);
+      margin:0; padding:32px; color:#0f172a;
+    }
+    .container{max-width:900px;margin:0 auto}
+    header{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+    h1{font-size:20px;margin:0}
+    p.lead{margin:0;color:var(--muted);font-size:13px}
+    .card{background:var(--card);border-radius:12px;padding:20px;box-shadow:0 6px 18px rgba(2,6,23,0.06)}
+    form .row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+    label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}
+    input[type="number"], select{
+      padding:10px 12px;border-radius:8px;border:1px solid #e6edf3;font-size:14px;width:100%;
+    }
+    .col{flex:1 1 180px;min-width:160px}
+    .full{flex:1 1 100%}
+    .actions{display:flex;gap:8px;align-items:center;margin-top:8px}
+    button{
+      background:var(--accent);color:#fff;border:none;padding:10px 14px;border-radius:10px;font-weight:600;cursor:pointer;
+    }
+    button.secondary{background:#e6eefc;color:var(--accent);font-weight:600}
+    .result{margin-top:14px;padding:12px;border-radius:10px;background:#f1f8ff;color:#0b3a8c;font-weight:600}
+    .small{font-size:13px;color:var(--muted)}
+    .inline{display:flex;gap:8px;align-items:center}
+    .bmi{font-weight:700;color:var(--success)}
+    .spinner{width:16px;height:16px;border-radius:50%;border:3px solid rgba(0,0,0,0.08);border-top-color:var(--accent);animation:spin 1s linear infinite;display:inline-block}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    footer{margin-top:18px;color:var(--muted);font-size:13px}
+    @media (max-width:520px){
+      .row{gap:10px}
+    }
+  </style>
 </head>
 <body>
-    <h1>Welcome boy</h1>
+  <div class="container">
+    <header>
+      <div style="width:56px;height:56px;background:linear-gradient(180deg,#2563eb,#7c3aed);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700">OB</div>
+      <div>
+        <h1>Obesity Classification — demo</h1>
+        <p class="lead">Fill the fields and press <strong>Predict</strong>. This frontend posts JSON to <code>/predict</code>.</p>
+      </div>
+    </header>
+
+    <div class="card">
+      <form id="obsForm" onsubmit="return false;">
+        <div class="row">
+          <div class="col">
+            <label for="gender">Gender</label>
+            <select id="gender">
+              <option>Female</option>
+              <option>Male</option>
+            </select>
+          </div>
+
+          <div class="col">
+            <label for="age">Age</label>
+            <input id="age" type="number" min="1" max="120" step="1" value="21" required>
+          </div>
+
+          <div class="col">
+            <label for="height">Height (meters)</label>
+            <input id="height" type="number" min="0.5" max="2.5" step="0.01" value="1.62" required>
+          </div>
+
+          <div class="col">
+            <label for="weight">Weight (kg)</label>
+            <input id="weight" type="number" min="10" max="300" step="0.1" value="64.0" required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <label for="family_history_with_overweight">Family history with overweight</label>
+            <select id="family_history_with_overweight">
+              <option>yes</option>
+              <option>no</option>
+            </select>
+          </div>
+
+          <div class="col">
+            <label for="favc">Frequent consumption of high-caloric food (FAVC)</label>
+            <select id="favc">
+              <option>yes</option>
+              <option>no</option>
+            </select>
+          </div>
+
+          <div class="col">
+            <label for="fcvc">FCVC (freq. of veg consumption; 1-3)</label>
+            <input id="fcvc" type="number" min="1" max="3" step="1" value="2">
+          </div>
+
+          <div class="col">
+            <label for="ncp">NCP (number of main meals; 1-4)</label>
+            <input id="ncp" type="number" min="1" max="4" step="1" value="3">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <label for="caec">Consumption between meals (CAEC)</label>
+            <select id="caec">
+              <option>no</option>
+              <option>Sometimes</option>
+              <option>Frequently</option>
+              <option>Always</option>
+            </select>
+          </div>
+
+          <div class="col">
+            <label for="smoke">Smoke</label>
+            <select id="smoke">
+              <option>no</option>
+              <option>yes</option>
+            </select>
+          </div>
+
+          <div class="col">
+            <label for="ch2o">Daily water intake (CH2O) in liters</label>
+            <input id="ch2o" type="number" min="0" max="10" step="0.1" value="2.0">
+          </div>
+
+          <div class="col">
+            <label for="scc">SCC (monitor calories)</label>
+            <select id="scc">
+              <option>no</option>
+              <option>yes</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <label for="faf">FAF (physical activity frequency; 0-3)</label>
+            <input id="faf" type="number" min="0" max="3" step="1" value="0">
+          </div>
+
+          <div class="col">
+            <label for="tue">TUE (time using tech devices; approx hrs)</label>
+            <input id="tue" type="number" min="0" max="24" step="0.5" value="1.0">
+          </div>
+
+          <div class="col">
+            <label for="calc">CALC (alcohol consumption)</label>
+            <select id="calc">
+              <option>no</option>
+              <option>Sometimes</option>
+              <option>Frequently</option>
+              <option>Always</option>
+            </select>
+          </div>
+
+          <div class="col">
+            <label for="mtrans">Transportation method</label>
+            <select id="mtrans">
+              <option>Automobile</option>
+              <option>Motorbike</option>
+              <option>Bike</option>
+              <option>Public_Transportation</option>
+              <option>Walking</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="predictBtn">Predict</button>
+          <button id="exampleBtn" type="button" class="secondary">Load sample</button>
+          <div id="busy" style="display:none;margin-left:8px"><span class="spinner"></span></div>
+        </div>
+
+        <div id="messageArea"></div>
+      </form>
+
+      <div style="margin-top:12px" class="small">
+        <div>BMI: <span id="bmiVal" class="bmi">—</span> <span id="bmiClass" style="margin-left:8px;color:var(--muted)"></span></div>
+      </div>
+    </div>
+
+    <footer>
+      <p>Frontend posts JSON to <code>/predict</code> and expects <code>{"prediction":"..."} </code>. Put this page in your Flask `static/` folder or serve separately and enable CORS on the server.</p>
+    </footer>
+  </div>
+
+  <script>
+    // helper to get values
+    function getFormData(){
+      return {
+        gender: document.getElementById('gender').value,
+        age: parseFloat(document.getElementById('age').value) || 0,
+        height: parseFloat(document.getElementById('height').value) || 0,
+        weight: parseFloat(document.getElementById('weight').value) || 0,
+        family_history_with_overweight: document.getElementById('family_history_with_overweight').value,
+        favc: document.getElementById('favc').value,
+        fcvc: parseFloat(document.getElementById('fcvc').value) || 0,
+        ncp: parseFloat(document.getElementById('ncp').value) || 0,
+        caec: document.getElementById('caec').value,
+        smoke: document.getElementById('smoke').value,
+        ch2o: parseFloat(document.getElementById('ch2o').value) || 0,
+        scc: document.getElementById('scc').value,
+        faf: parseFloat(document.getElementById('faf').value) || 0,
+        tue: parseFloat(document.getElementById('tue').value) || 0,
+        calc: document.getElementById('calc').value,
+        mtrans: document.getElementById('mtrans').value
+      };
+    }
+
+    function computeBMI(height, weight){
+      if (!height || !weight) return null;
+      const bmi = weight / (height * height);
+      return Math.round(bmi * 10) / 10;
+    }
+
+    function bmiCategory(bmi){
+      if (bmi === null) return '';
+      if (bmi < 18.5) return 'Underweight';
+      if (bmi < 25) return 'Normal';
+      if (bmi < 30) return 'Overweight';
+      return 'Obese';
+    }
+
+    function showMessage(html, isError=false){
+      const area = document.getElementById('messageArea');
+      area.innerHTML = '<div class="result" style="background:'+ (isError? '#fff1f0' : '#f1f8ff') +'; color:'+ (isError? '#991b1b':'#0b3a8c') +'">'+html+'</div>';
+    }
+
+    async function predict(){
+      const btn = document.getElementById('predictBtn');
+      const busy = document.getElementById('busy');
+      btn.disabled = true; busy.style.display='inline-block';
+      document.getElementById('messageArea').innerHTML = '';
+
+      const data = getFormData();
+
+      // compute BMI client-side and display
+      const bmi = computeBMI(data.height, data.weight);
+      document.getElementById('bmiVal').textContent = bmi ? bmi : '—';
+      document.getElementById('bmiClass').textContent = bmi ? '(' + bmiCategory(bmi) + ')' : '';
+
+      try {
+        const resp = await fetch('/predict', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(data),
+        });
+
+        if (!resp.ok){
+          const text = await resp.text();
+          throw new Error('Server returned ' + resp.status + ': ' + text);
+        }
+
+        const json = await resp.json();
+
+        // server expected to return {"prediction": "..."}
+        if (json.prediction !== undefined){
+          showMessage('Predicted Obesity Category: <span style="font-weight:800;">' + String(json.prediction) + '</span>');
+        } else {
+          showMessage('Unexpected server response: ' + JSON.stringify(json), true);
+        }
+      } catch (err){
+        showMessage('Error: ' + err.message, true);
+      } finally {
+        btn.disabled = false; busy.style.display='none';
+      }
+    }
+
+    document.getElementById('predictBtn').addEventListener('click', predict);
+
+    // load example (your sample)
+    document.getElementById('exampleBtn').addEventListener('click', function(){
+      const sample = {
+        gender:'Female',
+        age:21.0,
+        height:1.62,
+        weight:64.0,
+        family_history_with_overweight:'yes',
+        favc:'no',
+        fcvc:2.0,
+        ncp:3.0,
+        caec:'Sometimes',
+        smoke:'no',
+        ch2o:2.0,
+        scc:'no',
+        faf:0.0,
+        tue:1.0,
+        calc:'no',
+        mtrans:'Public_Transportation'
+      };
+      // set fields
+      Object.keys(sample).forEach(k=>{
+        const el = document.getElementById(k);
+        if (!el) return;
+        if (el.tagName === 'SELECT' || el.type === 'text' || el.type === 'number'){
+          el.value = sample[k];
+        }
+      });
+      // update BMI visually
+      const bmi = computeBMI(sample.height, sample.weight);
+      document.getElementById('bmiVal').textContent = bmi ? bmi : '—';
+      document.getElementById('bmiClass').textContent = bmi ? '(' + bmiCategory(bmi) + ')' : '';
+    });
+
+    // initial sample load to match your newsample
+    document.getElementById('exampleBtn').click();
+  </script>
 </body>
 </html>
